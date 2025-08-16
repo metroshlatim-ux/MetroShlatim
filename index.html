@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>מטרו שלטים</title>
+
+<!-- מניעת Cache -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Oswald:wght@700&display=swap" rel="stylesheet">
 <style>
   * {margin:0; padding:0; box-sizing:border-box; font-family: 'Montserrat', sans-serif;}
@@ -40,7 +46,7 @@
     align-items:center;
   }
   .top-bar a:hover {color:#FF6600;}
-  .top-bar a img {width:24px; height:24px;} /* לגודל האייקון */
+  .top-bar a img {width:24px; height:24px;}
 
   /* Hero Section במרכז */
   .hero {
@@ -152,7 +158,7 @@
     font-weight:bold;
   }
 
-  /* לוגו 350x250 מותאם למסך */
+  /* לוגו */
   .logo {
     position:absolute;
     top:10px;
@@ -173,7 +179,6 @@
     .top-bar {padding:10px 15px; gap:10px;}
     .top-bar a img {width:20px; height:20px;}
   }
-
 </style>
 </head>
 <body>
@@ -203,7 +208,7 @@
   </div>
 </div>
 
-<!-- וואטסאפ בצד ימין למטה -->
+<!-- וואטסאפ -->
 <div class="whatsapp-wrapper">
   <div class="whatsapp-menu" id="whatsappMenu">
     <a href="https://wa.me/0556613083">📱 צ'אט עם שמואל</a>
@@ -212,7 +217,7 @@
   <div class="whatsapp-icon" onclick="toggleWhatsApp()">💬</div>
 </div>
 
-<!-- טופס פופ-אפ עם Formspree -->
+<!-- טופס פופ-אפ -->
 <div class="popup-form" id="contactForm">
   <span class="popup-close" onclick="closeForm()">✖</span>
   <h3>השאירו פרטים וניצור איתכם קשר</h3>
@@ -229,11 +234,9 @@
     const menu = document.getElementById('whatsappMenu');
     menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
   }
-
   function openForm() {
     document.getElementById('contactForm').style.display = 'block';
   }
-
   function closeForm() {
     document.getElementById('contactForm').style.display = 'none';
   }
