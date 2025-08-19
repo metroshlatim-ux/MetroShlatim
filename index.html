@@ -20,9 +20,15 @@
     position:absolute;
     top:10px;
     left:30px;
-    width:350px;
+    max-height: 80px; /* למחשב */
     height:auto;
     max-width:100%;
+  }
+
+  @media (max-width:768px){
+    .logo {
+      max-height: 45px; /* למובייל */
+    }
   }
 
   /* תפריט */
@@ -31,19 +37,57 @@
     justify-content:center;
     gap:30px;
     padding:15px 30px;
-    background: rgba(0,0,0,0.6);
+    background: rgba(255,255,255,0.9); /* לבן עם שקיפות קלה */
     position: sticky;
     top:0;
     z-index:1000;
   }
   .top-bar a {
     text-decoration:none;
-    color:#FFD700;
+    color:#123c74;
     font-weight:700;
     font-size:18px;
     transition: color 0.3s;
   }
   .top-bar a:hover {color:#FF6600;}
+
+  /* Hamburger */
+  .menu-toggle {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #123c74;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 1001;
+  }
+  .nav-links {
+    display:flex;
+    gap:30px;
+    transition: all 0.5s ease;
+  }
+  @media (max-width:768px) {
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      background: rgba(255,255,255,0.9);
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transform: translateX(100%);
+    }
+    .nav-links.active { 
+      display:flex; 
+      transform: translateX(0);
+    }
+    .menu-toggle { display:block; }
+    .top-bar { justify-content: flex-end; padding-right:60px; }
+    .top-bar a { color:#123c74; font-size:16px; }
+  }
 
   /* קוביית CTA מרכזית */
   .cta-box {
@@ -193,11 +237,16 @@
 <!-- לוגו -->
 <img src="logo.png" alt="מטרו שלטים" class="logo">
 
+<!-- Hamburger -->
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
 <!-- תפריט -->
 <div class="top-bar">
-  <a href="#about">קצת עלינו</a>
-  <a href="#services">השירותים שלנו</a>
-  <a href="#contact">צור קשר</a>
+  <nav class="nav-links">
+    <a href="#about">קצת עלינו</a>
+    <a href="#services">השירותים שלנו</a>
+    <a href="#contact">צור קשר</a>
+  </nav>
 </div>
 
 <!-- קוביה מרכזית -->
@@ -258,6 +307,12 @@
 <button class="sound-btn" onclick="toggleMusic()" id="musicBtn">🔊</button>
 
 <script>
+  // Hamburger menu
+  function toggleMenu() {
+    const nav = document.querySelector('.nav-links');
+    nav.classList.toggle('active');
+  }
+
   // וואטסאפ
   function toggleWhatsApp() {
     const menu = document.getElementById('whatsappMenu');
