@@ -4,89 +4,99 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>מטרו שלטים</title>
-
-<!-- מניעת Cache -->
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Oswald:wght@700&display=swap" rel="stylesheet">
 <style>
   * {margin:0; padding:0; box-sizing:border-box; font-family: 'Montserrat', sans-serif;}
-  body {overflow-x:hidden; direction: rtl; color:white; position:relative;}
-
-  /* רקע וידאו */
-  #bg-video {
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    object-fit:cover;
-    z-index:-1;
-    filter: brightness(0.5);
+  body {
+    overflow-x:hidden;
+    direction: rtl;
+    color:#123c74;
+    background: url("background.png") no-repeat center center fixed;
+    background-size: cover;
   }
 
-  /* Top Bar בצד ימין */
+  /* לוגו */
+  .logo {
+    position:absolute;
+    top:10px;
+    left:30px;
+    width:350px;
+    height:auto;
+    max-width:100%;
+  }
+
+  /* תפריט */
   .top-bar {
     display:flex;
-    justify-content:flex-end;
-    gap:20px;
-    padding:10px 30px;
-    background: rgba(255,255,255,0.9);
+    justify-content:center;
+    gap:30px;
+    padding:15px 30px;
+    background: rgba(0,0,0,0.6);
     position: sticky;
     top:0;
     z-index:1000;
   }
   .top-bar a {
     text-decoration:none;
-    color:#333;
+    color:#FFD700;
     font-weight:700;
-    padding:5px 10px;
+    font-size:18px;
     transition: color 0.3s;
-    display:flex;
-    align-items:center;
   }
   .top-bar a:hover {color:#FF6600;}
-  .top-bar a img {width:24px; height:24px;}
 
-  /* Hero Section במרכז */
-  .hero {
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    text-align:center;
-    padding:0 20px;
-  }
-
-  /* טקסט במלבן צהוב עם שקיפות */
-  .hero-box {
-    background-color: rgba(255, 215, 0, 0.85);
-    padding: 20px 30px;
+  /* קוביית CTA מרכזית */
+  .cta-box {
+    background: #fff;
+    color: #123c74;
+    padding: 30px;
     border-radius: 15px;
-    display:inline-block;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    opacity:0;
+    transform: translateY(30px);
+    transition: all 1s ease;
   }
-  .hero-box h1 {
-    font-family: 'Oswald', sans-serif;
-    font-size:60px;
-    font-weight:700;
+  .cta-box.visible {
+    opacity:1;
+    transform: translateY(0);
+  }
+  .main-cta {
+    max-width: 700px;
+    margin: 40px auto 20px auto;
+  }
+
+  /* סקשנים */
+  section {
+    padding:80px 20px;
+    background: rgba(255,255,255,0.9);
+    margin:20px 0;
+    border-radius:15px;
+    max-width:1000px;
+    margin-left:auto;
+    margin-right:auto;
+    opacity:0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+  }
+  section.visible {
+    opacity:1;
+    transform: translateY(0);
+  }
+  section h2 {
+    color:#123c74;
+    font-size:32px;
     margin-bottom:20px;
-    color:white;
-    animation: fadeZoom 1s ease-in-out;
+    text-align:center;
   }
-  .hero-box h2 {
-    font-size:24px;
-    font-weight:500;
-    color:white;
-    animation: fadeZoom 1.2s ease-in-out;
-  }
-
-  @keyframes fadeZoom {
-    0% {opacity:0; transform: scale(0.9);}
-    100% {opacity:1; transform: scale(1);}
+  section p {
+    font-size:18px;
+    line-height:1.6;
+    text-align:center;
+    color:#123c74;
   }
 
-  /* וואטסאפ צף */
+  /* וואטסאפ */
   .whatsapp-wrapper {
     position:fixed;
     bottom:20px;
@@ -125,87 +135,111 @@
   }
   .whatsapp-menu a:hover {background-color:#128C7E; transform: scale(1.05);}
 
-  /* טופס פופ-אפ */
-  .popup-form {
-    display:none;
+  /* סאונד */
+  .sound-btn {
     position:fixed;
-    top:50%; left:50%;
-    transform:translate(-50%, -50%);
-    background-color: rgba(255, 215, 0, 0.9);
+    bottom:100px;
+    right:20px;
+    background:#FF6600;
+    color:white;
+    border:none;
+    border-radius:50%;
+    width:60px; height:60px;
+    font-size:24px;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    transition: background 0.3s;
+  }
+  .sound-btn:hover {background:#cc5200;}
+
+  /* טופס השאירו פרטים בתחתית הדף */
+  .footer-form {
+    background:#123c74;
+    color:white;
     padding:30px;
     border-radius:15px;
-    z-index:2000;
-    box-shadow:0 5px 20px rgba(0,0,0,0.5);
-    color:white;
-    width:90%;
-    max-width:400px;
+    max-width:500px;
+    margin:40px auto;
     text-align:center;
+    opacity:0;
+    transform: translateY(30px);
+    transition: all 1s ease;
   }
-  .popup-form h3 {margin-bottom:15px;}
-  .popup-form input, .popup-form textarea {
-    width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #fff;
-    background: rgba(255,255,255,0.2); color:white;
+  .footer-form.visible {
+    opacity:1;
+    transform: translateY(0);
   }
-  .popup-form button {
-    padding:10px 20px; background:#FF6600; color:white; border:none; border-radius:5px; cursor:pointer;
-    width:100%;
+  .footer-form input {
+    width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:none; background:white; color:#123c74;
   }
-  .popup-close {
-    position:absolute;
-    top:10px; right:15px;
-    font-size:20px;
-    cursor:pointer;
-    font-weight:bold;
+  .footer-form button {
+    padding:12px 25px; background:white; color:#123c74; border:none; border-radius:10px; cursor:pointer;
+    font-weight:700;
+    font-size:16px;
   }
+  .footer-form button:hover {background:#e0e0e0;}
 
-  /* לוגו */
-  .logo {
-    position:absolute;
-    top:10px;
-    left:30px;
-    width:350px;
-    height:250px;
-    max-width:100%;
-    height:auto;
-  }
-
-  /* התאמה למובייל */
+  /* מובייל */
   @media (max-width:768px){
-    .hero-box h1 {font-size:36px;}
-    .hero-box h2 {font-size:16px;}
-    .hero-box {padding:15px 20px;}
-    .logo {width:180px; height:auto;}
-    .whatsapp-wrapper {bottom:15px; right:15px;}
-    .top-bar {padding:10px 15px; gap:10px;}
-    .top-bar a img {width:20px; height:20px;}
+    .main-cta h2 {font-size:28px;}
+    section h2 {font-size:24px;}
+    section p {font-size:16px;}
   }
+
 </style>
 </head>
 <body>
 
-<!-- רקע וידאו -->
-<video autoplay muted loop id="bg-video">
-  <source src="Background-Web-Video.mp4" type="video/mp4">
-</video>
-
-<!-- Top Bar -->
-<div class="top-bar">
-  <a href="#contact" onclick="openForm()">☎️ צור קשר</a>
-  <a href="mailto:Metroshlatim@gmail.com">📧 מייל</a>
-  <a href="https://www.instagram.com/metroshlatim/" target="_blank">
-    <img src="instagram-icon.png" alt="אינסטגרם">
-  </a>
-</div>
-
 <!-- לוגו -->
 <img src="logo.png" alt="מטרו שלטים" class="logo">
 
-<!-- Hero Section -->
-<div class="hero">
-  <div class="hero-box">
-    <h1>השלטים שמבליטים את העסק שלך!</h1>
-    <h2>שילוט ומיתוג מקצועי לעסקים – איכות, יצירתיות ופתרונות מותאמים אישית לכל לקוח.</h2>
-  </div>
+<!-- תפריט -->
+<div class="top-bar">
+  <a href="#about">קצת עלינו</a>
+  <a href="#services">השירותים שלנו</a>
+  <a href="#contact">צור קשר</a>
+</div>
+
+<!-- קוביה מרכזית -->
+<div class="cta-box main-cta" id="mainCTA">
+  <h2>רוצים לשדרג את העסק שלכם?</h2>
+  <p>פתרונות עיצוב, ייצור והתקנה של כל סוגי השלטים.<br>
+  אנחנו כאן כדי לדאוג שהעסק שלכם יראה מקצועי וממותג.</p>
+</div>
+
+<!-- קצת עלינו -->
+<section id="about">
+  <h2>קצת עלינו</h2>
+  <p>מטרו שלטים – חברה מובילה בתחום העיצוב והייצור של שלטים לעסקים.<br>
+  עם ניסיון רב, צוות מקצועי וטכנולוגיות מתקדמות, אנחנו מספקים פתרונות שילוט חדשניים ומותאמים אישית.</p>
+</section>
+
+<!-- שירותים -->
+<section id="services">
+  <h2>השירותים שלנו</h2>
+  <p>✅ עיצוב מותאם אישית<br>
+  ✅ ייצור באיכות גבוהה<br>
+  ✅ התקנה מקצועית בכל הארץ<br>
+  ✅ ליווי אישי מתחילת הפרויקט ועד סופו</p>
+</section>
+
+<!-- צור קשר -->
+<section id="contact">
+  <h2>צור קשר</h2>
+  <p>📞 055-661-3083<br>
+     📞 054-728-3690<br>
+     📧 <a href="mailto:Metroshlatim@gmail.com" style="color:#123c74;">Metroshlatim@gmail.com</a></p>
+</section>
+
+<!-- טופס השאירו פרטים בתחתית הדף -->
+<div class="footer-form" id="footerForm">
+  <h3>השאירו פרטים</h3>
+  <form action="https://formspree.io/f/mldlkgrq" method="POST">
+    <input type="text" name="name" placeholder="שם מלא" required>
+    <input type="tel" name="phone" placeholder="טלפון" required>
+    <input type="email" name="email" placeholder="אימייל">
+    <button type="submit">שלח</button>
+  </form>
 </div>
 
 <!-- וואטסאפ -->
@@ -217,29 +251,56 @@
   <div class="whatsapp-icon" onclick="toggleWhatsApp()">💬</div>
 </div>
 
-<!-- טופס פופ-אפ -->
-<div class="popup-form" id="contactForm">
-  <span class="popup-close" onclick="closeForm()">✖</span>
-  <h3>השאירו פרטים וניצור איתכם קשר</h3>
-  <form action="https://formspree.io/f/mldlkgrq" method="POST">
-    <input type="text" name="name" placeholder="שם מלא" required>
-    <input type="email" name="email" placeholder="אימייל" required>
-    <textarea name="message" placeholder="הודעה" required></textarea>
-    <button type="submit">שלח</button>
-  </form>
-</div>
+<!-- מוזיקה -->
+<audio id="bg-music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+<button class="sound-btn" onclick="toggleMusic()" id="musicBtn">🔊</button>
 
 <script>
+  // וואטסאפ
   function toggleWhatsApp() {
     const menu = document.getElementById('whatsappMenu');
     menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
   }
-  function openForm() {
-    document.getElementById('contactForm').style.display = 'block';
+
+  // סאונד
+  const music = document.getElementById("bg-music");
+  const btn = document.getElementById("musicBtn");
+  let playing = false;
+  function toggleMusic() {
+    if (playing) {
+      music.pause();
+      btn.innerText = "🔇";
+    } else {
+      music.play();
+      btn.innerText = "🔊";
+    }
+    playing = !playing;
   }
-  function closeForm() {
-    document.getElementById('contactForm').style.display = 'none';
+
+  // אנימציות גלילה
+  function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return rect.top <= window.innerHeight - 100;
   }
+
+  const elementsToAnimate = [
+    document.getElementById("mainCTA"),
+    document.getElementById("footerForm"),
+    document.getElementById("about"),
+    document.getElementById("services"),
+    document.getElementById("contact")
+  ];
+
+  function scrollAnimations() {
+    elementsToAnimate.forEach(el => {
+      if(isInViewport(el)) el.classList.add("visible");
+    });
+  }
+
+  window.addEventListener("scroll", scrollAnimations);
+  window.addEventListener("load", scrollAnimations);
 </script>
 
 </body>
